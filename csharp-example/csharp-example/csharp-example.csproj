@@ -67,8 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest2.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="litecart_example.cs" />
+    <Compile Include="google_example.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
