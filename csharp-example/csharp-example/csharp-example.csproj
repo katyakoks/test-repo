@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="litecart_labels.cs" />
     <Compile Include="litecart_example.cs" />
     <Compile Include="google_example.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

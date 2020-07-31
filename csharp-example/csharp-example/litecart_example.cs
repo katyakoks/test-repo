@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -37,7 +38,7 @@ namespace csharp_example
 
             //прокликивает последовательно все пункты меню слева, включая вложенные пункты
             //для каждой страницы проверяет наличие заголовка
-            System.Collections.Generic.List<IWebElement> MenuToClick = driver.FindElements(By.ClassName("app")).ToList();
+            List<IWebElement> MenuToClick = driver.FindElements(By.ClassName("app")).ToList();
             int MenuCount = MenuToClick.Count;
             for (int i = 0; i <= MenuCount - 1; i++)
             {  
