@@ -38,22 +38,22 @@ namespace csharp_example
 
             //прокликивает последовательно все пункты меню слева, включая вложенные пункты
             //для каждой страницы проверяет наличие заголовка
-            List<IWebElement> MenuToClick = driver.FindElements(By.ClassName("app")).ToList();
-            int MenuCount = MenuToClick.Count;
-            for (int i = 0; i <= MenuCount - 1; i++)
+            List<IWebElement> menuToClick = driver.FindElements(By.ClassName("app")).ToList();
+            int menuCount = menuToClick.Count;
+            for (int i = 0; i <= menuCount - 1; i++)
             {  
-                MenuToClick = driver.FindElements(By.ClassName("app")).ToList();
-                MenuToClick[i].Click();
+                menuToClick = driver.FindElements(By.ClassName("app")).ToList();
+                menuToClick[i].Click();
                 wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.ClassName("panel-heading")));
 
-                System.Collections.Generic.List<IWebElement> SubmenuToClick = driver.FindElements(By.CssSelector("[class=doc]")).ToList();
-                int SubmenuCount = SubmenuToClick.Count;
-                if (SubmenuCount > 0)
+                List<IWebElement> submenuToClick = driver.FindElements(By.CssSelector("[class=doc]")).ToList();
+                int submenuCount = submenuToClick.Count;
+                if (submenuCount > 0)
                 { 
-                    for (int j = 0; j <= SubmenuCount - 1; j++)
+                    for (int j = 0; j <= submenuCount - 1; j++)
                     {
-                        SubmenuToClick = driver.FindElements(By.CssSelector("[class=doc]")).ToList();
-                        SubmenuToClick[j].Click();
+                        submenuToClick = driver.FindElements(By.CssSelector("[class=doc]")).ToList();
+                        submenuToClick[j].Click();
                         wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.ClassName("panel-heading")));
                     }
                 }

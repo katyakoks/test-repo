@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
-using OpenQA.Selenium.Support.UI;
 
 namespace csharp_example
 {
@@ -14,7 +11,7 @@ namespace csharp_example
     public class MyThirdTest
     {
         private IWebDriver driver;
-        private WebDriverWait wait;
+        private string startUrl;
 
             [SetUp]
         public void start()
@@ -22,29 +19,36 @@ namespace csharp_example
             //driver = new InternetExplorerDriver();
             //driver = new FirefoxDriver();
             driver = new ChromeDriver();
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            startUrl = "http://localhost/litecart/";
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             }
 
         [Test]
         public void ThirdTest()
-        { 
-            driver.Url = "http://localhost/litecart/";
-            wait.Until(ExpectedConditions.TitleContains("My Store"));
-
-            //наличие у всех товаров одной полоски в левом верхнем углу изображения
-            var productToCheck = driver.FindElements(By.ClassName("product-column")).ToList();
-            int productCount = productToCheck.Count;
-            var label = driver.FindElement(By.ClassName("sticker"));
-
-            for (int i = 0; i <= productCount; i++)
-            {
-                productToCheck = driver.FindElements(By.ClassName("product-column")).ToList();
-                productToCheck.Contains(label);
-                Assert.IsTrue(label.Displayed);
-            }
+        {
+            driver.Url = startUrl;
+            LabelCheck();
         }
+        /// <summary>
+        /// проверяется, что у каждого товара имеется ровно один стикер.
+        /// </summary>
+        private void LabelCheck()
+        {
+            int productWithLabel = 0;
+            var productToCheck = driver.FindElements(By.ClassName("product-column"));
 
-        [TearDown]
+            //считается кол-во товаров с 1 стикером
+            for (int i = 0; i < productToCheck.Count; i++)
+            {
+                var label = productToCheck[i].FindElements(By.CssSelector("div.sticker"));
+                if (label.Count == 1)
+                {
+                    productWithLabel++;
+                }
+            }
+            Assert.IsTrue (productWithLabel == productToCheck.Count, "Все товары имеют по 1 стикеру");
+        }
+            [TearDown]
         public void stop()
         {
             driver.Quit();
