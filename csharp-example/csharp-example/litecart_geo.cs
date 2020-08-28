@@ -58,58 +58,61 @@ namespace csharp_example
             //актуальный список стран
             var actualCountries = new List<string>();
 
-            //добавление стран в список
-            for (int i = 1; i <= countCountries; i++)
+            if (AreElementsPresent(By.XPath("//tr/td[5]/a[1]")))
             {
-                string country = driver.FindElement(By.XPath("//tr/td[5]/a[1]")).GetAttribute("text");
-                actualCountries.Add(country);
-            }
-
-            //ожидаемый список стран
-            var expectedCountries = new List<string>(actualCountries);
-            expectedCountries.Sort();
-
-            //проверка
-            Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Страны расположены в алфавитном порядке");
-
-            //перебор стран с зонами > 0
-            for (int i = 1; i <= countCountries; i++)
-            {
-                //поиск количества зон
-                string contentZones = driver.FindElement(By.XPath("//tr/td[@class='text-center' and 6]")).GetAttribute("textContent");
-                
-                //актуальный список стран с зонами
-                var actualZones = new List<string>();
-
-                //условие для стран с зонами
-                if (contentZones != "0")
+                //добавление стран в список
+                for (int i = 1; i <= countCountries; i++)
                 {
-                    //переход на страницу страны с зонами
-                    driver.FindElement(By.XPath("//tr/td[5]/a[1]")).Click();
+                    string country = driver.FindElement(By.XPath("//tr/td[5]/a[1]")).GetAttribute("text");
+                    actualCountries.Add(country);
+                }
 
-                    //поиск зон на странице
-                    var zones = driver.FindElements(By.XPath("//td[3]/input[@class='form-control' and 1]"));
-                    
-                    //кол-во зон
-                    int countZones = zones.Count;
+                //ожидаемый список стран
+                var expectedCountries = new List<string>(actualCountries);
+                expectedCountries.Sort();
 
-                    //перебор зон
-                    for (int j = 1; j <= countZones; j++)
+                //проверка
+                Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Страны расположены в алфавитном порядке");
+
+                //перебор стран с зонами > 0
+                for (int i = 1; i <= countCountries; i++)
+                {
+                    //поиск количества зон
+                    string contentZones = driver.FindElement(By.XPath("//tr/td[@class='text-center' and 6]")).GetAttribute("textContent");
+
+                    //актуальный список стран с зонами
+                    var actualZones = new List<string>();
+
+                    //условие для стран с зонами
+                    if (contentZones != "0")
                     {
-                        //поиск названия зоны
-                        string zone = driver.FindElement(By.XPath("//td[3]/input[@class='form-control' and 1]")).GetAttribute("value");
-                        
-                        //добавление зоны в актуальный список
-                        actualZones.Add(zone);
+                        //переход на страницу страны с зонами
+                        driver.FindElement(By.XPath("//tr/td[5]/a[1]")).Click();
+
+                        //поиск зон на странице
+                        var zones = driver.FindElements(By.XPath("//td[3]/input[@class='form-control' and 1]"));
+
+                        //кол-во зон
+                        int countZones = zones.Count;
+
+                        //перебор зон
+                        for (int j = 1; j <= countZones; j++)
+                        {
+                            //поиск названия зоны
+                            string zone = driver.FindElement(By.XPath("//td[3]/input[@class='form-control' and 1]")).GetAttribute("value");
+
+                            //добавление зоны в актуальный список
+                            actualZones.Add(zone);
+                        }
+
+                        //ожидаемый список зон
+                        var expectedZones = new List<string>(actualZones);
+                        expectedZones.Sort();
+
+                        //проверка
+                        Assert.IsTrue(actualZones.SequenceEqual(expectedZones), "Страны расположены в алфавитном порядке");
+                        driver.Navigate().Back();
                     }
-
-                    //ожидаемый список зон
-                    var expectedZones = new List<string>(actualZones);
-                    expectedZones.Sort();
-
-                    //проверка
-                    Assert.IsTrue(actualZones.SequenceEqual(expectedZones), "Страны расположены в алфавитном порядке");
-                    driver.Navigate().Back();
                 }
             }
         }
@@ -128,34 +131,41 @@ namespace csharp_example
             //количество зон
             int countZones = zones.Count;
 
-            //перебор зон
-            for (int i = 1; i <= countZones; i++)
+            if (AreElementsPresent(By.XPath("//td[3]/a[1]")))
             {
-                //переход на страницу зоны
-                driver.FindElement(By.XPath("//td[3]/a[1]")).Click();
-
-                //поиск стран
-                var countries = driver.FindElements(By.XPath("//td[2]"));
-
-                //актуальный список стран
-                var actualCountries = new List<string>();
-
-                //перебор стран в зоне
-                foreach (IWebElement countrie in countries)
+                //перебор зон
+                for (int i = 1; i <= countZones; i++)
                 {
-                    //актуальный список названий стран
-                    string countrieName = countrie.GetAttribute("text");
-                    actualCountries.Add(countrieName);
+                    //переход на страницу зоны
+                    driver.FindElement(By.XPath("//td[3]/a[1]")).Click();
+
+                    //поиск стран
+                    var countries = driver.FindElements(By.XPath("//td[2]"));
+
+                    //актуальный список стран
+                    var actualCountries = new List<string>();
+
+                    //перебор стран в зоне
+                    foreach (IWebElement countrie in countries)
+                    {
+                        //актуальный список названий стран
+                        string countrieName = countrie.GetAttribute("text");
+                        actualCountries.Add(countrieName);
+                    }
+
+                    //ожидаемый список стран
+                    var expectedCountries = new List<string>(actualCountries);
+                    expectedCountries.Sort();
+
+                    //проверка
+                    Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Зоны расположены в алфавитном порядке");
+                    driver.Navigate().Back();
                 }
-
-                //ожидаемый список стран
-                var expectedCountries = new List<string>(actualCountries);
-                expectedCountries.Sort();
-
-                //проверка
-                Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Зоны расположены в алфавитном порядке");
-                driver.Navigate().Back();
             }
+        }
+        private bool AreElementsPresent(By by)
+        {
+            return driver.FindElements(by).Count > 0;
         }
 
         [TearDown]

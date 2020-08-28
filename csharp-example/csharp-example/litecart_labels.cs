@@ -13,7 +13,7 @@ namespace csharp_example
         private IWebDriver driver;
         private string startUrl;
 
-            [SetUp]
+        [SetUp]
         public void start()
         {
             //driver = new InternetExplorerDriver();
@@ -21,7 +21,7 @@ namespace csharp_example
             driver = new ChromeDriver();
             startUrl = "http://localhost/litecart/";
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            }
+        }
 
         [Test]
         public void ThirdTest()
@@ -35,20 +35,28 @@ namespace csharp_example
         private void LabelCheck()
         {
             int productWithLabel = 0;
-            var productToCheck = driver.FindElements(By.ClassName("product-column"));
 
-            //считается кол-во товаров с 1 стикером
-            for (int i = 0; i < productToCheck.Count; i++)
+            var productToCheck = driver.FindElements(By.ClassName("product-column"));
+            if (AreElementsPresent(By.ClassName("product-column")))
             {
-                var label = productToCheck[i].FindElements(By.CssSelector("div.sticker"));
-                if (label.Count == 1)
+                //считается кол-во товаров с 1 стикером
+                for (int i = 0; i < productToCheck.Count; i++)
                 {
-                    productWithLabel++;
+                    var label = productToCheck[i].FindElements(By.CssSelector("div.sticker"));
+                    if (label.Count == 1)
+                    {
+                        productWithLabel++;
+                    }
                 }
+                Assert.IsTrue(productWithLabel != productToCheck.Count, "Не все товары имеют по 1 стикеру");
             }
-            Assert.IsTrue (productWithLabel != productToCheck.Count, "Не все товары имеют по 1 стикеру");
         }
-            [TearDown]
+        private bool AreElementsPresent(By by)
+        { 
+            return driver.FindElements(by).Count > 0; 
+        }
+        
+        [TearDown]
         public void stop()
         {
             driver.Quit();
