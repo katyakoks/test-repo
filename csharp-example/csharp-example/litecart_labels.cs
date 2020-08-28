@@ -46,7 +46,7 @@ namespace csharp_example
                     productWithLabel++;
                 }
             }
-            Assert.IsTrue (productWithLabel == productToCheck.Count, "Все товары имеют по 1 стикеру");
+            Assert.IsTrue (productWithLabel != productToCheck.Count, "Не все товары имеют по 1 стикеру");
         }
             [TearDown]
         public void stop()
