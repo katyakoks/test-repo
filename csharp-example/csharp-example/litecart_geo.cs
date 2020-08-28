@@ -72,7 +72,7 @@ namespace csharp_example
                 expectedCountries.Sort();
 
                 //проверка
-                Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Страны расположены в алфавитном порядке");
+                Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Страны расположены не в алфавитном порядке");
 
                 //перебор стран с зонами > 0
                 for (int i = 1; i <= countCountries; i++)
@@ -110,7 +110,7 @@ namespace csharp_example
                         expectedZones.Sort();
 
                         //проверка
-                        Assert.IsTrue(actualZones.SequenceEqual(expectedZones), "Страны расположены в алфавитном порядке");
+                        Assert.IsTrue(actualZones.SequenceEqual(expectedZones), "Страны расположены не в алфавитном порядке");
                         driver.Navigate().Back();
                     }
                 }
@@ -158,7 +158,7 @@ namespace csharp_example
                     expectedCountries.Sort();
 
                     //проверка
-                    Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Зоны расположены в алфавитном порядке");
+                    Assert.IsTrue(actualCountries.SequenceEqual(expectedCountries), "Зоны расположены не в алфавитном порядке");
                     driver.Navigate().Back();
                 }
             }
