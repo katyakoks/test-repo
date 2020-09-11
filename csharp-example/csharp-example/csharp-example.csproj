@@ -67,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="litecart_add_product.cs" />
+    <Compile Include="litecart_login.cs" />
     <Compile Include="litecart_product_page.cs" />
     <Compile Include="litecart_geo.cs" />
     <Compile Include="litecart_labels.cs" />
